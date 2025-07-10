@@ -54,46 +54,59 @@ def transact(acc1, acc2, amt):
         print(str(customer[acc1].withdraw(acc1, amt)))
 
 def run_bank():
-    c = input("1. Create account \n2. Deposit \n3. Withdraw \n4. Set interest rate \n5. Calculate return \n6. Show account info \n7. Transact \n8. Exit \nInput: ")
+    c = input("1. Create account \n2. Deposit \n3. Withdraw \n4. Show interest rate \n5. Calculate return \n6. Show account info \n7. Transact \n8. Exit \nInput: ")
     print()
     if c.isdigit():
         choice = int(c)
         if choice == 1:
             name = input("What is your full name: ")
-            dep = int(input("What is your intial deposit: "))
-            if dep > 0:
-                ir = 3.5
-                # set by user?
-                print("ACCOUNT SUCCESSFULLY CREATED")
-                print("Account number: " + str(create_account(name, dep, ir)) + " Interest rate: " + str(ir))
+            d = input("What is your intial deposit: ")
+            if d.isdigit():
+                dep = int(d)
+                if dep > 0:
+                    ir = 3.5
+                    # set by user?
+                    print("ACCOUNT SUCCESSFULLY CREATED")
+                    print("Account number: " + str(create_account(name, dep, ir)) + " Interest rate: " + str(ir))
+                else:
+                    print("Please try again and input a positive number.")
             else:
-                print("Please try again and input a positive number.")
+                print("Invalid input, try again.")
         elif len(customer)==0:
             print ("Please create an account first.")
         else:
             if choice == 2:
                 acc = int(input("What is your account number: "))
                 if check_acc(acc):
-                    dep = int(input("How much do you want to deposit: "))
-                    if dep > 0:
-                        print("New balance: " + str(customer[acc].deposit(acc, dep)))
+                    d = input("How much do you want to deposit: ")
+                    if d.isdigit():
+                        dep = int(d)
+                        if dep > 0:
+                            print("New balance: " + str(customer[acc].deposit(acc, dep)))
+                        else:
+                            print("Please try again and input a positive number.")
                     else:
-                        print("Please try again and input a positive number.")
+                        print("Invalid input, try again.")
                 else:
                     print("Invalid account number, try again.")
             elif choice == 3:
-                acc = int(input("What is you account number: "))
+                acc = int(input("What is your account number: "))
                 if check_acc(acc):
-                    dep = int(input("How much do you want to withdraw: "))
-                    print("New balance: " + str(customer[acc].withdraw(acc, dep)))
+                    d = input("How much do you want to withdraw: ")
+                    if d.isdigit():
+                        dep = int(d)
+                        print("New balance: " + str(customer[acc].withdraw(acc, dep)))
+                    else:
+                        print("Invalid input, try again.")
                 else:
                     print("Invalid account number, try again.")
             elif choice == 4:
                 # interest rate limits
                 acc = int(input("What is your account number: "))
                 if check_acc(acc):
-                    ir = float(input("Input new interest rate: "))
-                    print("New interest rate: " + str(customer[acc].set_interest_rate(acc, ir)))
+                    # ir = float(input("Input new interest rate: "))
+                    # print("Interest rate: " + str(customer[acc].set_interest_rate(acc, ir)))
+                    print("Interest rate: " + str(customer[acc].ir))
                 else: 
                     print("Invalid account number, try again.")
             elif choice == 5:
@@ -123,6 +136,8 @@ def run_bank():
             elif choice == 8:
                 print("Bank app has been closed")
                 return False
+            else:
+                print("Invalid input, try again.")
     else:
         print("Invalid input, try again.")
     print()
