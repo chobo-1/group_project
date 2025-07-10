@@ -19,7 +19,8 @@ class BankAccount:
         self.ir = ir
         return self.ir
     def calculate_expected_return(self, acc: int, years: int) -> float:
-        return self.bal * (1+self.ir) ** years
+        ir = self.ir/100
+        return self.bal * (1+ir) ** years
     def print_info(self):
         print("Name: " + self.name)
         print("Account: " + str(self.account))
@@ -61,7 +62,7 @@ def run_bank():
             name = input("What is your full name: ")
             dep = int(input("What is your intial deposit: "))
             if dep > 0:
-                ir = 4.25
+                ir = 3.5
                 # set by user?
                 print("ACCOUNT SUCCESSFULLY CREATED")
                 print("Account number: " + str(create_account(name, dep, ir)) + " Interest rate: " + str(ir))
