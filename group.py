@@ -43,12 +43,14 @@ def check_acc(acc):
         return False
     
 def transact(acc1, acc2, amt):
-    customer[acc1].withdraw(acc1, amt)
-    customer[acc2].deposit(acc2, amt)
-    if amt>0:
-        print("Account: " + str(acc1) + " has sent Account: " + str(acc2) + " $" + str(amt))
-        print("Account: " + str(acc1) + " New balance: " + str(customer[acc1].bal))
-        print("Account: " + str(acc2) + " New balance: " + str(customer[acc2].bal))
+    if customer[acc1].withdraw(acc1, amt) != "Insufficient funds, enter valid amount":
+        customer[acc2].deposit(acc2, amt)
+        if amt>0:
+            print("Account: " + str(acc1) + " has sent Account: " + str(acc2) + " $" + str(amt))
+            print("Account: " + str(acc1) + " New balance: " + str(customer[acc1].bal))
+            print("Account: " + str(acc2) + " New balance: " + str(customer[acc2].bal))
+    else:
+        print(str(customer[acc1].withdraw(acc1, amt)))
 
 def run_bank():
     c = input("1. Create account \n2. Deposit \n3. Withdraw \n4. Set interest rate \n5. Calculate return \n6. Show account info \n7. Transact \n8. Exit \nInput: ")
@@ -112,8 +114,8 @@ def run_bank():
             elif choice == 7:
                 acc1 = int(input("What is your account number: "))
                 acc2 = int(input("What account do you want to send to: "))
-                amt = int(input("How much do you want to send: "))
                 if check_acc(acc1) and check_acc(acc2):
+                    amt = int(input("How much do you want to send: "))
                     transact(acc1, acc2, amt)
                 else:
                     print("Invalid input, try again.")
