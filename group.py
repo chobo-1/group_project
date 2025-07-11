@@ -35,7 +35,10 @@ def create_account(n: str, dep: int, ir: float) -> int:
     # dictionaries dont allow duplciate keys, is replaced
 
 def rand_num() -> int:
-    return random.randint(10000000, 100000000)
+    while True:
+        r = random.randint(10000000, 99999999)
+        if r not in customer:
+            return r
 
 def check_acc(acc): 
     if acc in customer:
@@ -44,14 +47,14 @@ def check_acc(acc):
         return False
     
 def transact(acc1, acc2, amt):
-    if customer[acc1].withdraw(acc1, amt) != "Insufficient funds, enter valid amount":
+    result = customer[acc1].withdraw(acc1, amt)
+    if isinstance(result, int):
         customer[acc2].deposit(acc2, amt)
-        if amt>0:
-            print("Account: " + str(acc1) + " has sent Account: " + str(acc2) + " $" + str(amt))
-            print("Account: " + str(acc1) + " New balance: " + str(customer[acc1].bal))
-            print("Account: " + str(acc2) + " New balance: " + str(customer[acc2].bal))
+        print("Account: " + str(acc1) + " has sent Account: " + str(acc2) + " $" + str(amt))
+        print("Account: " + str(acc1) + " New balance: " + str(customer[acc1].bal))
+        print("Account: " + str(acc2) + " New balance: " + str(customer[acc2].bal))
     else:
-        print(str(customer[acc1].withdraw(acc1, amt)))
+        print(result)
 
 def run_bank():
     c = input("1. Create account \n2. Deposit \n3. Withdraw \n4. Show interest rate \n5. Calculate return \n6. Show account info \n7. Transact \n8. Exit \nInput: ")
